@@ -1,0 +1,289 @@
+
+body {
+    /* 使用線性漸層：從淺藍白 (#e6f2ff) 漸變到 柔和灰藍 (#d9e6f2) */
+    background: linear-gradient(180deg, #f1f6fa 0%, #c8e1fd 100%);
+    
+    /* 讓背景固定，當你滑動網頁時，漸層顏色會像底板一樣固定不動 */
+    background-attachment: fixed;
+    
+    /* 確保背景覆蓋整個視窗高度 */
+    min-height: 100vh;
+    
+    margin: 0;
+    padding: 0;
+}
+
+/* 為了讓文字在藍色背景下更易讀，可以稍微加深文字顏色 */
+.info p, .info li {
+    color: #2c3e50; /* 深灰藍色，比原本的 #656565 更有層次 */
+}
+
+.container {
+    width: 600px;
+    margin: 0 auto;
+    padding-bottom: 250px;
+    
+}
+
+.photo {
+    width: 200px;        /* 原本是 100px，改為 200px 達成 2 倍大 */
+    margin: 50px auto 0; /* 保持水平置中 */
+    display: block;      /* */
+}
+
+.photo img {
+    width: 100%;         /* 圖片寬度會跟隨父容器 .photo */
+    height: 100%;        /* */
+    aspect-ratio: 1 / 1; /* */
+    object-fit: cover;   /* */
+    border-radius: 50%;  /* 確保維持圓形 */
+}
+
+.photo img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%; /* 確保是圓形 */
+}
+
+.social-links {
+    text-align: center;
+    margin-top: 20px;    /* 拉開與第三段條列式的距離 */
+    margin-bottom: 30px; /* 避免離下方的作品集太近 */
+}
+
+.instagram-link {
+    display: inline-flex;  /* 讓圖示與文字排成一行 */
+    align-items: center;   /* 垂直置中 */
+    gap: 10px;             /* 圖示與文字之間的距離 */
+    text-decoration: none; /* 移除底線 */
+    color: #8e8d8d;        /* 配合你原本 info 的字體顏色 */
+    transition: all 0.3s ease;
+}
+
+/* 設定名稱文字的樣式 */
+.ig-username {
+    font-size: 1.2rem;     /* 調整字體大小 */
+    font-weight: 1000;      /* 調整字體粗細 */
+}
+
+/* 滑鼠移上去時，文字與圖示一起變色 */
+.instagram-link:hover {
+    color: #1b60c0;        /* IG 的經典色 */
+    transform: translateY(-2px); /* 輕微往上浮動的效果 */
+}
+
+.instagram-link svg {
+    display: block;      /* 消除 SVG 下方多餘間隙 */
+}
+
+.top{
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: aliceblue;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #333333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    z-index: 1000;
+    color: #083c87;
+}
+
+.works {
+    display: flex;
+    flex-wrap: wrap;        /* 允許換行 */
+    justify-content: center; /* 改為 center 讓三張圖在中間更美觀 */
+    width: 100%;            /* 寬度跟隨 container */
+    margin-top: 50px;
+    gap: 10px;               /* 關鍵：設定上下左右統一的 10px 間距 */
+}
+
+.work-item {
+    position: relative;     /* */
+    /* 核心計算：(100% 寬度 - 2個 10px 間隙) 除以 3，達成完美等距 */
+    flex-basis: calc((100% - (10px * 2)) / 3); 
+    z-index: 1;             /* */
+    transition: z-index 0.3s;
+}
+
+.work-item:hover {
+    z-index: 10; /* 確保放大時在最上層 */
+}
+
+.work-item:hover img {
+    /* 保持原有的放大與清晰設定 */
+    filter: blur(0) !important;
+    opacity: 1 !important;
+    transform: scale(1.5);   /* */
+    transform-origin: center bottom;
+    /* 關鍵：確保放大時以中心為準，並稍微向上偏移以防切到 */
+    transform-origin: center center;
+}
+
+
+.work-item img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover; /* 平時裁切成正方形 */
+    transition: all 0.3s ease;
+    image-rendering: -webkit-optimize-contrast;
+    backface-visibility: hidden;
+}
+
+.work-item:hover img {
+    transform: scale(1.5);     /* 放大兩倍 */
+    object-fit: contain;     /* 顯示完整圖片 */
+    box-shadow: 0 10px 50px rgba(0,0,0,0.8); /* 增加陰影 */
+}
+
+.work-item{
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+
+/* 第一段：當滑鼠進入整個作品區域 (.works) 時，先讓「所有」圖片變模糊 */
+.works:hover .work-item img {
+    filter: blur(5px);  /* 設定模糊程度，數值越大越糊 */
+    opacity: 0.6;       /* 讓背景圖片稍微變暗，凸顯主角 */
+    transition: all 0.3s ease; /* 加上平滑的過渡動畫 */
+}
+
+/* 第二段：當滑鼠具體停在「某一張」圖片上時，給它特權，讓它變回清晰並放大 */
+.work-item:hover img {
+    filter: blur(0) !important; /* 強制取消模糊，保持清晰 */
+    opacity: 1 !important;      /* 恢復完全不透明 */
+    
+    /* 以下維持你原本的放大設定 */
+    transform: scale(1.5); /* 放大兩倍 */
+    
+    /* 關鍵 1：不要用 contain，改用 initial 讓它顯示原圖尺寸比例，才不會糊 */
+    object-fit: initial; 
+    aspect-ratio: auto;
+
+    /* 關鍵 2：增加明顯的白邊 (20px 可以根據喜好調整) */
+    /* 使用 outline 不會影響到原本照片的佔位空間，邊界最銳利 */
+    outline: 5px solid white; 
+    
+    /* 增加重陰影讓白邊更突出 */
+    box-shadow: 0 20px 60px rgba(0,0,0,0.7); 
+    
+    z-index: 999;
+}
+
+/* 確保當滑鼠指著時，這張圖完全不准模糊 */
+.work-item:hover img {
+    filter: blur(0) !important;
+}
+
+/* 讓其他沒被指到的圖片變模糊，襯托主角 */
+.works:hover .work-item:not(:hover) img {
+    filter: blur(10px);
+    opacity: 0.5;
+}
+
+.overlay{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    /*top: 0;
+    bottom: 0;
+    left: 0;
+    rigjt: 0;*/
+    inset: 0;
+    background-color: black;
+    color: aliceblue;
+    opacity: 0;
+    /*透明度*/
+    pointer-events: none;
+}
+
+.work-item:hover .overlay{
+    opacity: 1;
+}
+
+
+.name {
+    position: static;         /* 恢復正常排版 */
+    text-align: center;       /* 文字置中 */
+    margin-top: 20px;         /* 從 10px 改為 20px，增加與頭像的呼吸感 */
+    color: #083c87;
+}
+
+.name h1 {
+    margin: 0;                /* 移除標題內建的過大間距 */
+    font-size: 48px;          /* 將原本的 24px 改大（例如 48px 或更多） */
+    font-weight: 900;         /* 讓字體更厚實 */
+    letter-spacing: 2px;      /* 稍微增加字距，看起來更有質感 */
+}
+
+.info {
+    text-align: center; /* 讓所有內容預設置中 */
+    margin: 30px auto;
+    max-width: 800px;  /* 限制寬度，閱讀動線會更集中 */
+}
+
+.info p {
+    margin-bottom: 20px;
+}
+
+/* 第一段：置中 */
+.info p:nth-of-type(1) {
+    text-align: center;
+    font-weight: bold; /* 建議加粗讓它像標題 */
+    font-size: 1.2rem;
+    color: #222;
+}
+
+/* 第二段：縮小 */
+.info p:nth-of-type(2) {
+    font-size: 0.85rem; /* 縮小字體 */
+    color: #666;       /* 稍微變淡 */
+    text-align: center; /* 如果也想置中可以保留這行 */
+}
+
+/* 第三段：條列式呈現 */
+.info p:nth-of-type(3) {
+    display: list-item;      /* 強制以列表項目顯示 */
+    list-style-type: disc;   /* 顯示圓點 */
+    list-style-position: inside; /* 確保圓點在容器內 */
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;      /* 寬度隨文字變動以利置中 */
+    line-height: 1.8;        /* 增加行高方便閱讀 */
+}
+
+.skill-list {
+    display: table; /* 讓清單整體置中 */
+    margin: 10px auto;
+    padding: 0;
+    text-align: left; /* 文字維持左對齊比較好閱讀 */
+}
+
+.skill-list li {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+/* 針對 .info 區域內的第二段文字增加下方間距 */
+.info p:nth-of-type(2) {
+    margin-bottom: 20px; /* 數值越大，距離越開 */
+    line-height: 1.8;    /* 稍微增加行高，讓閱讀更舒服 */
+}
+
+/* 確保第三段（條列式）上方也有足夠空間 */
+.info ul {
+    margin-top: 20px;
+    margin-bottom: 10px; 
+    padding-left: 0;     /* 移除預設內縮 */
+    display: inline-block; /* 配合 text-align: center 使用 */
+    text-align: left;    /* 讓清單文字左對齊 */
+}
